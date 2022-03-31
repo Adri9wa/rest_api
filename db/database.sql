@@ -2,6 +2,7 @@ create TABLE persons(
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
     nickname VARCHAR(255),
+    password VARCHAR(150) not NULL,
     created_at DATE NOT NULL,
 );
 
@@ -15,7 +16,6 @@ create TABLE orders(
 
 create TABLE notes(
     id SERIAL PRIMARY KEY,
-    title VARCHAR(255),
     text VARCHAR(255),
     created_at DATE NOT NULL,
     person_id INTEGER,
