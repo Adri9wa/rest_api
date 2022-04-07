@@ -1,0 +1,86 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 3: Stripe</title>
+  </head>
+  <script>
+    const handleSubmit = () => {
+      console.log("submit");
+      fetch("/api/checkout-stripe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: [
+            { id: 1, quantity: 3 },
+            { id: 2, quantity: 2 },
+          ],
+        }),
+      })
+        .then((res) => {
+          console.log(res);
+          if (res.ok) return res.json();
+          res.json().then((json) => Promise.reject(json));
+        })
+        .then(({ url }) => {
+          console.log(url);
+          // window.location = url;
+          window.open(url, "_blank");
+        })
+        .catch((e) => console.error(e.error));
+    };
+  </script>
+  <body style="margin: 0; height: 100vh; background-color: #241135">
+    <header
+      style="
+        text-align: center;
+        height: 70px;
+        vertical-align: middle;
+        line-height: 70px;
+        background-color: #335880;
+      "
+    >
+      <p
+        style="color: white; font-size: 26px; font-family: 'Roboto', sans-serif"
+      >
+        Lab 3: Stripe
+      </p>
+    </header>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90%;
+      "
+    >
+      <div>
+        <button
+          style="
+            border: 3px solid #693a8f;
+            border-radius: 10px;
+            background-color: #335880;
+            height: 70px;
+            width: 200px;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            cursor: pointer;
+          "
+          onclick="handleSubmit()"
+        >
+          Send request
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
